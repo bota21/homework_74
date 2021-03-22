@@ -1,16 +1,15 @@
-const express = require('express');
+const express = require("express");
+const products = require("./app/message");
+const db = require("./fileDb");
 const app = express();
+
 const port = 2100;
 
-app.get('/', (req, res) => {
-    res.send('Get message');
-});
+db.init();
 
-app.post('/', (req, res) => {
-    console.log(req.body);
-    res.send('Post message');
-});
+app.use(express.json());
+app.use("/messages", products(db));
 
 app.listen(port, () => {
-    console.log('Server work at https://localhost:' + port);
-})
+  console.log("Server started at http://localhost:" + port);
+});
